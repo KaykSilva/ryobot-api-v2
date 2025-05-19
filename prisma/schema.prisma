@@ -14,3 +14,14 @@ model DiscordUser {
   username  String
   joinedAt  DateTime @default(now())
 }
+
+model RedeemCode {
+  id        Int       @id @default(autoincrement())
+  code      String    @unique
+  amount    Int
+  used      Boolean   @default(false)
+  createdAt DateTime  @default(now())
+  usedAt    DateTime?
+  userId    Int?
+  expiresAt DateTime?
+}

@@ -13,18 +13,8 @@ export function requireAuth(req: NextRequest) {
 
   try {
     const decoded = verifyToken(token)
+    return decoded
 
-    const allowedId = process.env.ADMIN_ID
-
-    if (
-      decoded &&
-      typeof decoded === 'object' &&
-      String(decoded.discordId) === allowedId
-    ) {
-      return decoded
-    }
-
-    return NextResponse.json({ error: 'Acesso negado' }, { status: 403 })
   } catch (err) {
     return NextResponse.json({ error: 'Token inválido' }, { status: 401 })
   }

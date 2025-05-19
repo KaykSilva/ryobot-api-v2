@@ -9,12 +9,12 @@ Este projeto é composto por duas partes:
 
 ## 📦 Tecnologias
 
-- [Next.js 14](https://nextjs.org/)
+- [Next.js 15](https://nextjs.org/)
 - [Discord OAuth2](https://discord.com/developers/docs/topics/oauth2)
 - [JWT (JSON Web Token)](https://jwt.io/)
 - Typescript
-- API Routes (app router)
-- Prisma ou ORM equivalente (opcional)
+- API Routes
+- Prisma ou ORM equivalente
 
 ---
 ![Logo do Bot](https://i.pinimg.com/736x/71/d6/20/71d620de16fd720371d157d783eab60a.jpg)

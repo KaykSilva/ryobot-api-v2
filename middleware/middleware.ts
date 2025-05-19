@@ -18,5 +18,5 @@ export function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ['/api/private/:path*'], // Protege rotas que começam com /api/private/
+  matcher: ['/api/:path*'], // Protege rotas que começam com /api/private/
 }

@@ -3,14 +3,13 @@ import { handleGetUser, handleUpdateUser, handleDeleteUser } from '@/controller/
 import { requireAuth } from '@/lib/jwtVerifyer'
 
 
-export async function GET(req: NextRequest, context: Promise<{ params: { id: string } }>) {
-  const { params } = await context
-  const id = Number(params.id)
+export async function GET(req: NextRequest, { params }: { params: { id: string } }) {
   const auth = requireAuth(req)
   if (auth instanceof Response) return auth
+
+  const id = params.id 
   return await handleGetUser(id)
 }
-
 export async function PUT(req: NextRequest, { params }: { params: { id: string } }) {
   const auth = requireAuth(req)
   if (auth instanceof Response) return auth

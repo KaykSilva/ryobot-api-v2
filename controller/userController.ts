@@ -5,7 +5,8 @@ import {
     getAllUsers,
     getUserById,
     updateUser,
-    deleteUser
+    deleteUser,
+    getUserByDcId
 } from '@/service/userService'
 
 export async function handleCreateUser(req: NextRequest) {
@@ -26,11 +27,20 @@ export async function handleGetAllUsers() {
     return NextResponse.json(users)
 }
 
-export async function handleGetUser(id: number) {
-    const user = await getUserById(id)
+export async function handleGetUser(id: string) {
+    const isNumericId = /^\d+$/.test(id) && Number(id) <= Number.MAX_SAFE_INTEGER
+
+    let user
+    if (isNumericId) {
+        user = await getUserById(Number(id))
+    } else {
+        user = await getUserByDcId(id)
+    }
+
     if (!user) {
         return NextResponse.json({ error: 'Usuário não encontrado' }, { status: 404 })
     }
+
     return NextResponse.json(user)
 }
 

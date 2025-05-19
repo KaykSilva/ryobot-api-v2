@@ -15,6 +15,7 @@ interface UpdateUserData {
 interface DiscordUserInfo {
   id: string
   username: string
+
 }
 
 export const createUser = (data: CreateUserData): Promise<DiscordUser> => {
@@ -28,6 +29,9 @@ export const getAllUsers = (): Promise<DiscordUser[]> => {
 
 export const getUserById = (id: number): Promise<DiscordUser | null> => {
   return prisma.discordUser.findUnique({ where: { id } })
+}
+export const getUserByDcId = (discordId: string): Promise<DiscordUser | null> => {
+  return prisma.discordUser.findUnique({ where: { discordId } })
 }
 
 

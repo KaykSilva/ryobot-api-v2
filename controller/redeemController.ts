@@ -1,8 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { createRedeemCode, getAllCodes, redeemCode } from '@/service/redeemService'
 import { requireAuth } from '@/lib/jwtVerifyer'
-import { JwtPayload } from 'jsonwebtoken'
-import { IRedeemCode } from '@/models/reedemCode'
+import { getUserByDcId } from '@/service/userService'
 
 
 export async function handleCreateCode(req: NextRequest) {
@@ -24,23 +23,26 @@ export async function handleCreateCode(req: NextRequest) {
 
 export async function handleRedeemCode(req: NextRequest) {
   const body = await req.json()
-  const { code } = body
+  const { code, discordId } = body
   const user = requireAuth(req);
   if (!user) {
     return NextResponse.json({ error: 'Usuário não autenticado' }, { status: 401 });
   }
 
   try {
-    const result = await redeemCode(code, (user as JwtPayload).id)
+    const dcId = await getUserByDcId(discordId)
+    const userId = dcId?.id
+    if (!userId) {
+      return NextResponse.json({ error: 'Usuário não encontrado' }, { status: 404 });
+    }
+    const result = await redeemCode(code, userId)
     return NextResponse.json({ message: 'Código resgatado', result })
   } catch (err: any) {
     return NextResponse.json({ error: err.message }, { status: 400 })
   }
 }
 
-
 export async function handleGetAllCodes(req: NextRequest) {
-
   const user = requireAuth(req);
   if (!user) {
     return NextResponse.json({ error: 'Usuário não autenticado' }, { status: 401 });

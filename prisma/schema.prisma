@@ -13,6 +13,7 @@ model DiscordUser {
   discordId String   @unique
   username  String
   joinedAt  DateTime @default(now())
+  redeemAt DateTime? 
 }
 
 model RedeemCode {

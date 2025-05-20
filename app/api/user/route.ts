@@ -6,7 +6,6 @@ export async function POST(req: NextRequest) {
   const auth = requireAuth(req)
   if (auth instanceof Response) return auth
 
-  // Você pode acessar os dados do usuário autenticado com auth, se desejar
   return await handleCreateUser(req)
 }
 

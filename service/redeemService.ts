@@ -49,3 +49,18 @@ export async function redeemCode(code: string, userId: number): Promise<RedeemCo
 
   return redeem
 }
+
+export async function redeemDaily(value: number, userId: number) {
+  return await prisma.$transaction([
+    prisma.discordUser.update({
+      where: { id: userId },
+      data: {
+        balance: {
+          increment: value,
+        },
+        redeemAt: new Date(Date.now())
+      },
+    }),
+  ])
+
+}
